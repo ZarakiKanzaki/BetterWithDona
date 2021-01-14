@@ -1,18 +1,16 @@
 ﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:6305",
-      "sslPort": 44323
+      "applicationUrl": "http://localhost:12681",
+      "sslPort": 44391
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +18,6 @@
     "BetterWithDona": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
