@@ -1,5 +1,9 @@
 ﻿using BetterWithDona.Models;
+using Contentful.Core;
+using Contentful.Core.Models;
+using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,15 +16,21 @@ namespace BetterWithDona.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IContentfulClient _client;
+        private readonly IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IContentfulClient client)
         {
             _logger = logger;
+            _client = client;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            string resumeId = config.GetValue<string>("ResumeId");
+            var builder = new QueryBuilder<Resume>().FieldEquals(a => a.Sys.Id, resumeId).Include(3);
+            var resume = (await _client.GetEntries(builder)).FirstOrDefault();
+            return View(resume);
         }
 
         public IActionResult Privacy()

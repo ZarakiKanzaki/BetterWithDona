@@ -1,8 +1,184 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model BetterWithDona.Models.Resume
+@using Contentful.Core.Models;
+@section LinkedInSection{
+    <a href="@Model.UsefulLinks.FirstOrDefault().Name" target="_blank">Me</a>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section profilePicture{
+    <img src="@(Model.Photo.File.Url.ToString())" alt="" />
+}
+
+
+<!-- Section -->
+<section id="first">
+    <header>
+        <h2>Something About Me</h2>
+    </header>
+    <div class="content">
+        @Html.Raw(new HtmlRenderer().ToHtml(Model.About).Result)
+    </div>
+</section>
+<!-- End Section -->
+<!-- Section -->
+<section>
+    <header>
+        <h2>Work Experience</h2>
+    </header>
+    <div class="content">
+        <p><strong>Here </strong> you can find the most significative experiences.</p>
+
+
+        @foreach (var item in Model.WorkExperience)
+        {
+            <!-- Section -->
+            <section>
+                <header>
+                    <h3>@item.CompanyName</h3>
+                    <p>
+                        @item.JobTitle <br />
+                        @item.StartingDate.ToString("Y") - @(item.EndingDate!.Year > item.StartingDate.Year ? item.EndingDate.ToString("Y"):"Present")
+                    </p>
+                </header>
+                <div class="content">
+                    @if (item.JobDescription != null)
+                    {
+                        @Html.Raw(new HtmlRenderer().ToHtml(item.JobDescription).Result)
+                    }
+                </div>
+            </section>
+            <!-- End Section -->
+        }
+
+
+
+    </div>
+</section>
+<!-- End Section -->
+<!-- Section -->
+<section>
+    <header>
+        <h2>Hard Skills</h2>
+    </header>
+    <div class="content">
+        <p><strong>This section</strong> is just a simple extract of my Skills .</p>
+        <ul class="feature-icons">
+            <!-- HARDCODED Icons Generation -->
+            @{
+                var icons = new string[] { "fa-laptop", "fa-bolt", "fa-signal", "fa-cog", "fa-map-marker-alt", "fa-code" };
+                var mostSkilled = Model.Skills1.Where(a => a.EntryType == "skill").OrderByDescending(a => a.Value).Take(6);
+            }
+            @for (int i = 0; i < mostSkilled.Count(); i++)
+            {
+                <li class="icon solid @icons[i]">@mostSkilled.ElementAt(i).Name</li>
+
+            }
+        </ul>
+    </div>
+</section>
+<!-- End Section -->
+<!-- Section -->
+<section>
+    <header>
+        <h2>Education</h2>
+    </header>
+    <div class="content">
+        <p><strong>Here </strong> you can find my education.</p>
+
+
+        @foreach (var item in Model.Education.Where(a => !a.CompanyName.Contains("Milano")))
+        {
+            <!-- Section -->
+            <section>
+                <header>
+                    <h3>@item.CompanyName</h3>
+                    @if (item.JobDescription != null)
+                    {
+                        @Html.Raw(new HtmlRenderer().ToHtml(item.JobDescription).Result)
+                    }
+                </header>
+                <div class="content">
+                    <p>
+                        @item.JobTitle <br />
+                        @item.StartingDate.ToString("Y") - @(item.EndingDate!.Year > item.StartingDate.Year ? item.EndingDate.ToString("Y"):"Present")
+                    </p>
+
+                </div>
+            </section>
+            <!-- End Section -->
+        }
+
+
+
+    </div>
+</section>
+<!-- End Section -->
+@if (Model.CV != null)
+{
+    <!-- Section -->
+    <section>
+        <header>
+            <h2>Wanna see my Full Résume?</h2>
+        </header>
+        <div class="content">
+            <p>If<strong>You</strong> would like to examine in depth my Full Résume you can download it here.</p>
+            <ul class="actions">
+                <li><a href="@(Model.CV.File.Url.ToString())" target="_blank" class="button primary large">Download</a></li>
+                @*<li><a href="#" class="button large">↓ </a></li>*@
+            </ul>
+        </div>
+    </section>
+    <!-- End Section -->
+}
+
+<!-- Section -->
+<section>
+    <header>
+        <h2>Get in touch</h2>
+    </header>
+    <div class="content">
+        <p><strong>Auctor commodo</strong> interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis.</p>
+        <form>
+            <div class="fields">
+                <div class="field half">
+                    <input type="text" name="name" id="name" placeholder="Name" />
+                </div>
+                <div class="field half">
+                    <input type="email" name="email" id="email" placeholder="Email" />
+                </div>
+                <div class="field">
+                    <textarea name="message" id="message" placeholder="Message" rows="7"></textarea>
+                </div>
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" class="button primary" /></li>
+            </ul>
+        </form>
+    </div>
+    <footer>
+        <ul class="items">
+            <li>
+                <h3>Email</h3>
+                <a href="#">information@untitled.ext</a>
+            </li>
+            <li>
+                <h3>Phone</h3>
+                <a href="#">(000) 000-0000</a>
+            </li>
+            <li>
+                <h3>Address</h3>
+                <span>1234 Somewhere Road, Nashville, TN 00000</span>
+            </li>
+            <li>
+                <h3>Elsewhere</h3>
+                <ul class="icons">
+                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                    <li><a href="#" class="icon brands fa-codepen"><span class="label">Codepen</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </footer>
+</section>
