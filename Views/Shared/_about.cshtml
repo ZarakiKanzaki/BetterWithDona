@@ -1,0 +1,12 @@
+﻿@using Contentful.Core.Models;
+
+<!-- Section -->
+<section id="first">
+    <header>
+        <h2>Something About Me</h2>
+    </header>
+    <div class="content">
+        @Html.Raw(new HtmlRenderer().ToHtml(Model.About).Result)
+    </div>
+</section>
+<!-- End Section -->

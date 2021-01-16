@@ -14,7 +14,7 @@ namespace BetterWithDona.Models
         public Document About { get; set; }
         public DateTime Birthdate { get; set; }
         public Asset Photo { get; set; }
-        public object Address { get; set; }
+        public Address Address { get; set; }
         public Asset CV { get; set; }
         public List<Contacts> Contacts { get; set; }
         public List<WorkExperience> WorkExperience { get; set; }

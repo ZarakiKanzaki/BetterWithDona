@@ -15,6 +15,8 @@ namespace BetterWithDona.Models
         public string City { get; set; }
         public string Province { get; set; }
         public string ZipCode { get; set; }
+
+        public string FullAddress { get { return StreetName + " " + StreetNumber + ", " + ZipCode + ", " + City + (!string.IsNullOrWhiteSpace(Province) ? " (" + Province + ")" : string.Empty) ;} }
     }
 }
 
