@@ -1,0 +1,37 @@
+﻿@using Contentful.Core.Models;
+
+<!-- Section -->
+<section>
+    <header>
+        <h2>Work Experience</h2>
+    </header>
+    <div class="content">
+        @*<p><strong>Here </strong> you can find the most significative experiences.</p>*@
+
+
+        @foreach (var item in Model.WorkExperience)
+        {
+            <!-- Section -->
+            <section>
+                <header>
+                    <h3>@item.CompanyName</h3>
+                    <p>
+                        <b> @item.JobTitle </b> <br />
+                        @item.StartingDate.ToString("Y") - @(item.EndingDate!.Year > item.StartingDate.Year ? item.EndingDate.ToString("Y"):"Present")
+                    </p>
+                </header>
+                <div class="content">
+                    @if (item.JobDescription != null)
+                    {
+                        @Html.Raw(new HtmlRenderer().ToHtml(item.JobDescription).Result)
+                    }
+                </div>
+            </section>
+            <!-- End Section -->
+        }
+
+
+
+    </div>
+</section>
+<!-- End Section -->

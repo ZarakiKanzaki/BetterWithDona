@@ -1,0 +1,82 @@
+﻿@model BetterWithDona.Models.Resume
+@using Contentful.Core.Models;
+@section LinkedInSection{
+    <a href="@Model.UsefulLinks.FirstOrDefault().Name" target="_blank">Me</a>
+}
+
+@section profilePicture{
+    <img src="@(Model.Photo.File.Url.ToString())" alt="" />
+}
+
+<partial name="_about" />
+
+
+<partial name="_work" />
+
+@{
+    var mostSkilled = Model.Skills1.Where(a => a.EntryType == "skill").OrderByDescending(a => a.Value).Take(6);
+}
+<partial name="_skills" model="@mostSkilled" />
+
+<partial name="_education" />
+
+
+
+@if (Model.CV != null)
+{
+    <partial name="_download" />
+}
+
+<!-- Section -->
+<section>
+    <header>
+        <h2>Get in touch</h2>
+    </header>
+    <div class="content">
+        <p><strong>Are You<sup>(Not)</sup> Entertained ?</strong> Down below you can find a form send your offers, remember to introduce yourself and who you work for :). PS: did you spot the quote?</p>
+        <partial name="_submitYourOffer" model="@new WorkOffer()"/>
+
+    </div>
+    <footer>
+        <ul class="items">
+            <li>
+                <h3>Email</h3>
+                <a href="mailto:@Model.Contacts.FirstOrDefault(a=>a.ContactType=="email").Contact">@Model.Contacts.FirstOrDefault(a => a.ContactType == "email").Contact</a>
+            </li>
+            <li>
+                <h3>Phone</h3>
+                <a href="tel:@Model.Contacts.FirstOrDefault(a=>a.ContactType=="mobile").Contact">@Model.Contacts.FirstOrDefault(a => a.ContactType == "mobile").Contact</a>
+            </li>
+            <li>
+                <h3>Address</h3>
+                <span>@Model.Address.FullAddress</span>
+            </li>
+            <li>
+                <h3>Elsewhere</h3>
+                <ul class="icons">
+                    <li><a target="_blank" href="@Model.UsefulLinks.FirstOrDefault(a=>a.EntryType=="twitter").Name" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a target="_blank" href="@Model.UsefulLinks.FirstOrDefault(a=>a.EntryType=="instagram").Name" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a target="_blank" href="@Model.UsefulLinks.FirstOrDefault(a=>a.EntryType=="linkedin").Name" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                    <li><a target="_blank" href="@Model.UsefulLinks.FirstOrDefault(a=>a.EntryType=="github").Name" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </footer>
+</section>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            setTimeout(function () {
+                if (!(typeof $('#txtMessage').attr('value') === 'undefined' || !$('#txtMessage').attr('value'))) {
+                    $('#mdlMessage').modal('show');
+                }
+                if (!(typeof $('#ErrMessage').val() === 'undefined' || !$('#ErrMessage').val())) {
+                    $('#mdlError').modal('show');
+                }
+            }, 1000);
+            
+        });
+    </script>
+}

@@ -1,0 +1,25 @@
+﻿@model BetterWithDona.Models.WorkOffer
+
+<form method="post"  enctype="multipart/form-data">
+    <div class="fields">
+        <div class="field half">
+            <input type="text" name="Name" id="Name" placeholder="Name" />
+        </div>
+        <div class="field half">
+            <input type="email" name="Email" id="Email" placeholder="Email" />
+        </div>
+        <div class="field">
+            <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" />
+        </div>
+        <div class="field">
+            <label for="fileUploaded">Your offer file</label>
+            <input type="file"  name="fileUploaded" id="fileUploaded" accept="application/pdf"  />
+        </div>
+        <div class="field">
+            <textarea name="Message" id="Message" placeholder="Message" rows="7"></textarea>
+        </div>
+    </div>
+    <ul class="actions">
+        <li><input type="submit" value="Send your offer" class="button primary" /></li>
+    </ul>
+</form>

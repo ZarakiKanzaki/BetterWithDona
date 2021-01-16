@@ -1,0 +1,85 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Simply BETTER With Dona</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/favicon/site.webmanifest">
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Intro -->
+        <section class="intro">
+            <header>
+                <h1>Better With Dona</h1>
+                <p>An Online Résume made by  / @RenderSection("LinkedInSection", required: false)</p>
+                <ul class="actions">
+                    <li><a href="#first" class="arrow scrolly"><span class="label">Next</span></a></li>
+                </ul>
+            </header>
+            <div class="content">
+                <span class="image fill" data-position="center">@RenderSection("profilePicture", required: false)</span>
+            </div>
+        </section>
+        @RenderBody()
+        <!-- Copyright -->
+        <div class="copyright">&copy; Davide Donadio. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
+
+    </div>
+    <input type="text" value="@ViewBag.ErrMessage" id="ErrMessage" style="display:none;" />
+    <input type="text" value="@TempData["message"]" id="txtMessage" style="display:none;" />
+
+    <div id="mdlMessage" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">SUCCESS</h5>
+                </div>
+                <div class="modal-body">
+                    <p>@TempData["message"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button large"  data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mdlError" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">OPS!</h5>
+                </div>
+                <div class="modal-body">
+                    <p>@ViewBag.ErrMessage</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button large" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/jquery.scrolly.min.js"></script>
+    <script src="~/assets/js/browser.min.js"></script>
+    <script src="~/assets/js/breakpoints.min.js"></script>
+    <script src="~/assets/js/util.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
