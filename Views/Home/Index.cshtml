@@ -63,3 +63,20 @@
         </ul>
     </footer>
 </section>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            setTimeout(function () {
+                if (!(typeof $('#txtMessage').attr('value') === 'undefined' || !$('#txtMessage').attr('value'))) {
+                    $('#mdlMessage').modal('show');
+                }
+                if (!(typeof $('#ErrMessage').val() === 'undefined' || !$('#ErrMessage').val())) {
+                    $('#mdlError').modal('show');
+                }
+            }, 1000);
+            
+        });
+    </script>
+}

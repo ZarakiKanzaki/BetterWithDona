@@ -9,7 +9,7 @@ namespace BetterWithDona.Models
 {
     public class WorkOffer
     {
-        public SystemProperties Sys { get; set; }
+        public SystemProperties sys { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string CompanyName { get; set; }
