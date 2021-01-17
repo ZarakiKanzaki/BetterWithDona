@@ -1,12 +1,13 @@
 # BetterWithDona
 Here's my version of Window Site to present my résume.
-
+ Access the app through https://betterwithdona.herokuapp.com
 
 Example of appsettings.json
 ```
 {
   "ConnectionStrings": {
-    "DefaultConnection": "YOUR_CONNECTION_STRING" //decided to keep it in order scale when the login is implemented
+    // this could be used in future
+    "DefaultConnection": "YOUR CONNECTION STRING"
   },
   "Logging": {
     "LogLevel": {
@@ -16,21 +17,25 @@ Example of appsettings.json
     }
   },
   "AllowedHosts": "*",
-  "ResumeId": "Id_of_your_resume",
+  "ResumeId": "YOUR RESUME ID",
   "path": "./",
-  "smtp": "smtp_domain",
-  "userSmtp": "davide.userSmtp@gmail.com",
-  "pwdSmtp": "pwdSmtp",
+  //my ethereal SMTP TEST
+  "ServerMail": {
+    "smtp": "smtp.ethereal.email",
+    "userSmtp": "lee.casper@ethereal.email",
+    "pwdSmtp": "pwdSmtp",
+    "port": "587"
+  },
   "ContentfulOptions": {
-    "DeliveryApiKey": "DeliveryApiKey_Contentful",
-    "ManagementApiKey": "ManagementApiKey_Contentful",
-    "PreviewApiKey": PreviewApiKey_Contentful",
+    "DeliveryApiKey": "DeliveryApiKey",
+    "ManagementApiKey": "ManagementApiKey",
+    "PreviewApiKey": "PreviewApiKey",
     "SpaceId": "SpaceId",
     "UsePreviewApi": false,
     "MaxNumberOfRateLimitRetries": 0
   },
-    "fakeUser": "fakeUser",
-    "fakePwd": "fakePwd"
+  "fakeUser": "fakeUser",
+  "fakePwd": "fakePwd"
 }
 
 ```
