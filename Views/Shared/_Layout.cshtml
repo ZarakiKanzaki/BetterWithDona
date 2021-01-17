@@ -38,6 +38,7 @@
     </div>
     <input type="text" value="@ViewBag.ErrMessage" id="ErrMessage" style="display:none;" />
     <input type="text" value="@TempData["message"]" id="txtMessage" style="display:none;" />
+    <input type="text" value="@TempData["errMessage"]" id="txtErrMessage" style="display:none;" />
 
     <div id="mdlMessage" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -49,7 +50,7 @@
                     <p>@TempData["message"]</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="button large"  data-dismiss="modal">Close</button>
+                    <button type="button" class="button large" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

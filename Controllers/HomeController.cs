@@ -67,13 +67,15 @@ namespace BetterWithDona.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    LogTheError(ex);
                     ViewBag.ErrMessage = "OPS! Something went wrong, try again.";
                 }
 
             }
-            catch (ContentfulException ce)
+            catch (ContentfulException)
             {
+                // the following catch was made to understand if the content type existed,
+                // unfortunately I didn't find any docs on how to check the existence without raising an exception
                 await CreateWorkOffer();
 
             }
@@ -103,7 +105,7 @@ namespace BetterWithDona.Controllers
                 SystemProperties = new SystemProperties
                 {
                     Id = offerId,
-
+                    Version = 1,
                 },
                 Fields = new
                 {
@@ -123,15 +125,19 @@ namespace BetterWithDona.Controllers
                                 {
                                     { "en-US", workOffer.CompanyName },
                                 },
-                    Offer = new Dictionary<string, dynamic>()
+                    Offer = new Dictionary<string, Reference>()
                                 {
-                                    { "en-US", new { sys = new { type = "Link", linkType = "Asset", id = workOffer.Offer.SystemProperties.Id} } }
+                                    { "en-US", new Reference (SystemLinkTypes.Asset, "file-" + workOffer.Email.Replace('.', '-').Replace('@', '-')) },
                                 },
 
                 }
             };
-            await managementClient.CreateOrUpdateEntry(entry, contentTypeId: "workOffer");
-            await managementClient.PublishEntry(offerId, version: 1);
+            await managementClient.CreateOrUpdateEntry(entry, contentTypeId: "workOffer").ContinueWith(
+               async delegate
+               {
+                   var uploadedEntry = await managementClient.GetEntry(offerId);
+                   await managementClient.PublishEntry(offerId, version: uploadedEntry.SystemProperties.Version ?? 1);
+               });
         }
 
         private async Task ManageUploadedFile(WorkOffer workOffer, IFormFile file)
@@ -164,7 +170,7 @@ namespace BetterWithDona.Controllers
 
             var managementAsset = new ManagementAsset
             {
-                SystemProperties = new SystemProperties { Id = Id },
+                SystemProperties = new SystemProperties { Id = Id, Version = 1 },
                 Title = new Dictionary<string, string> {
                             { "en-US", workOffer.Email }
                         },
@@ -178,10 +184,16 @@ namespace BetterWithDona.Controllers
                         }
             };
 
-            await managementClient.UploadFileAndCreateAsset(managementAsset, bytes);
-            await managementClient.PublishAsset(Id, 2);
-
-            workOffer.Offer = await client.GetAsset(Id);
+            await managementClient.UploadFileAndCreateAsset(managementAsset, bytes)
+                .ContinueWith(async delegate
+                {
+                    // in this phase the upper function seems to make a different version is supposed to make, probably  UploadFileAndCreateAsset 
+                    // in order to upload and create the assets it makes 2 operation recognized by Contentful
+                    // var uploadedAsset = await managementClient.GetAsset(Id);
+                    var uploadedAsset = await managementClient.GetAsset(Id);
+                    await managementClient.PublishAsset(Id, version: uploadedAsset.SystemProperties.Version ?? 2);
+                    workOffer.Offer = await client.GetAsset(Id);
+                });
         }
 
         private async Task CreateWorkOffer()
@@ -272,22 +284,30 @@ namespace BetterWithDona.Controllers
             message.Body = mailTemplate;
 
             message.IsBodyHtml = true;
-
-            using (SmtpClient smtp = new SmtpClient(config.GetValue<string>("smtp"), 587))
+            var srvCred = config.GetSection("ServerMail").Get<ServerMailCredentials>();
+            using (SmtpClient smtp = new SmtpClient(srvCred.smtp, srvCred.port ))
             {
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential(config.GetValue<string>("userSmtp"), config.GetValue<string>("pwdSmtp"));
+                smtp.Credentials = new NetworkCredential(srvCred.userSmtp, srvCred.pwdSmtp);
                 smtp.EnableSsl = true;
                 await smtp.SendMailAsync(message);
             }
-            //SmtpClient client = new SmtpClient(config.GetValue<string>("smtp"))
-            //{
-            //    Credentials = new NetworkCredential(config.GetValue<string>("userSmtp"), config.GetValue<string>("pwdSmtp")),
-            //    Port = 587,
-            //    EnableSsl = true
-            //};
-            //client.Send(message);
         }
+
+        // easy way to log errors while you have a try catch and testing directly on the app
+        protected void LogTheError(Exception ex)
+        {
+            TempData["errMessage"] = getFullErrorException(ex, "");
+        }
+
+        private string getFullErrorException(Exception ex, string res)
+        {
+            res += ex.Message + "<br>";
+            if (ex.InnerException == null)
+                return res;
+            return getFullErrorException(ex.InnerException, res);
+        }
+
 
         public IActionResult Privacy()
         {
