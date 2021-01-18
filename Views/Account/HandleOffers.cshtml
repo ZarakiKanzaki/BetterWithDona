@@ -1,0 +1,93 @@
+﻿@model IEnumerable<BetterWithDona.Models.WorkOffer>
+@{
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+    ViewBag.Title = "Offers";
+}
+
+@section Breadcrumbs{
+    <!--this might be a partial too.-->
+    <ul class="breadcrumbs pull-left">
+        <li><a href="@Url.Action("Dashboard","Account")">Dashboard</a></li>
+        <li><span>Offers</span></li>
+    </ul>
+}
+<!-- Dark table start -->
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Handle Offers</h4>
+            <div class="data-tables">
+                <table id="tblOffers" class="text-center table-striped">
+                    <thead class="text-capitalize bg-dark">
+                        <tr class="text-white">
+                            <th>Name</th>
+                            <th>Company Name</th>
+                            <th>Position (not implemented yet)</th>
+                            <th>Date</th>
+                            <th>email</th>
+                            <th>satus</th>
+                            <th>OPS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.CompanyName</td>
+                                <td>Tbd</td>
+                                <td>@(item.sys.CreatedAt!=null?((DateTime)item.sys.CreatedAt).ToShortDateString():"never happened")</td>
+                                <td>@item.Name</td>
+                                <td><span class="badge badge-success">Accettata</span></td>
+                                <td>
+                                    <span>
+                                        <a href="@item.Offer.File.Url.ToString()" target="_blank">
+                                        <span class="badge badge-danger"><i class="fa fa-2x fa-file-pdf-o"></i></span>
+                                        </a>
+                                        <a class="acceptOffer" rel="@item.sys.Id">
+                                            <span class="badge badge-success"><i class="fa fa-2x fa-check"></i></span>
+                                        </a>
+                                        <a class="refuseOffer" rel="@item.sys.Id"><span class="badge badge-danger"><i class="fa fa-2x fa-close"></i></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Dark table end -->
+
+@section Styles{
+    <!-- Start datatable css -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+}
+
+@section Scripts{
+    <!-- Start datatable js -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <script>
+        $('#tblOffers').DataTable({
+            // responsive: true
+        });
+
+        $('.acceptOffer').click(function (e) {
+            e.preventDefault();
+            alert("Offer Accepted");
+        });
+        $('.refuseOffer').click(function (e) {
+            e.preventDefault();
+            alert("Offer refused");
+        });
+
+    </script>
+}
