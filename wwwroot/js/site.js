@@ -1,4 +1,48 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
 
-// Write your JavaScript code.
+    setTimeout(function () {
+        if (!(typeof $('#txtMessage').attr('value') === 'undefined' || !$('#txtMessage').attr('value'))) {
+            $('#mdlMessage').modal('show');
+        }
+        if (!(typeof $('#ErrMessage').val() === 'undefined' || !$('#ErrMessage').val())) {
+            $('#mdlError').modal('show');
+        }
+    }, 1000);
+
+
+
+    $('#frmOffer').validate({
+        rules: {
+            Name: {
+                required: true
+            },
+            Email: {
+                required: true,
+                email: true
+            },
+            CompanyName: {
+                required: true
+            },
+            fileUploaded: {
+                required: true
+            },
+            Message: {
+                required: true,
+            }
+        },
+        messages: {
+            Name:"Please tell who I'm talking to.",
+            CompanyName: "Please insert your Company Name.",
+            Message: "Please introduce yourself.",
+            fileUploaded: "You should attach your formal offer in order to send a request.",
+            Email: {
+                required:"Please insert your e-mail.",
+                email: "Please insert a real e-mail, don't be shy.",
+            },
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+
+});

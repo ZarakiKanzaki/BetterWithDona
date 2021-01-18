@@ -49,16 +49,16 @@ As part of our application process, we'd like to see what you can produce by giv
 
 We would like you to create an website application to show your CV . The features it should include:
 
- - [ x ] Show your CV to the visitor.
- - [ x ] Allow to visitors to send you offers via a form (if the forms sends also an email great!)
- - [ x ] Have a login area, even if with no credentials and mocked up.
- - [ ] In the private area (after the login) allow you to manage your CV and add, delete, update positions and personal data (shouldn't be working but just reproduce the user experience).
+ - [x] Show your CV to the visitor.
+ - [x] Allow to visitors to send you offers via a form (if the forms sends also an email great!)
+ - [x] Have a login area, even if with no credentials and mocked up.
+ - [x] In the private area (after the login) allow you to manage your CV and add, delete, update positions and personal data (shouldn't be working but just reproduce the user experience).
 
 The content part should be integrated via a headless CMS like Contentful. 
 
 #### Extra credit features
 
- - [ x ] Put the project online using Heroku or similar
- - [ ] Polish and UX
- - [ ] Highly reusable components
+ - [x] Put the project online using Heroku or similar
+ - [x] Polish and UX
+ - [x] Highly reusable components
  - [ ] Tests

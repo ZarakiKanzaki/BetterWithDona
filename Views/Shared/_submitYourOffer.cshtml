@@ -1,9 +1,9 @@
 ﻿@model BetterWithDona.Models.WorkOffer
 
-<form method="post"  enctype="multipart/form-data">
+<form id="frmOffer" method="post"  enctype="multipart/form-data">
     <div class="fields">
         <div class="field half">
-            <input type="text" name="Name" id="Name" placeholder="Name" />
+            <input type="text" name="Name" id="Name" placeholder="Name" @*class="form-control"*@/>
         </div>
         <div class="field half">
             <input type="email" name="Email" id="Email" placeholder="Email" />
