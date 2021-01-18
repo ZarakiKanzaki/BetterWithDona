@@ -1,5 +1,5 @@
 # BetterWithDona
-Here's my version of Window Site to present my résume.
+Here's my version of Window Site to present my rÃ©sume.
  Access the app through https://betterwithdona.herokuapp.com
 
 Example of appsettings.json
@@ -22,9 +22,9 @@ Example of appsettings.json
   //my ethereal SMTP TEST
   "ServerMail": {
     "smtp": "smtp.ethereal.email",
-    "userSmtp": "lee.casper@ethereal.email",
+    "userSmtp": "userSmtp",
     "pwdSmtp": "pwdSmtp",
-    "port": "587"
+    "port": "port"
   },
   "ContentfulOptions": {
     "DeliveryApiKey": "DeliveryApiKey",
