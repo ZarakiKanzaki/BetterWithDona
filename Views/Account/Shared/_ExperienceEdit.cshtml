@@ -1,0 +1,51 @@
+﻿@model BetterWithDona.Models.WorkExperience
+@using Contentful.Core.Models;
+<div class="card">
+    <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#accordion_@Model.Sys.Id">
+            @Model.CompanyName
+        </a>
+    </div>
+    <div id="accordion_@Model.Sys.Id" class="collapse" data-parent="#accordion23">
+        <div class="card-body">
+
+            <form>
+                <div class="form-group">
+                    <label for="CompanyName_@Model.Sys.Id" class="">Company Name</label>
+                    <input type="text" class="form-control" id="CompanyName_@Model.Sys.Id" value="@Model.CompanyName" placeholder="CompanyName_@Model.Sys.Id">
+                </div>
+                <div class="form-group">
+                    <label for="JobTitle_@Model.Sys.Id" class="">Job Title</label>
+                    <input type="text" class="form-control" id="JobTitle_@Model.Sys.Id" value="@Model.JobTitle" placeholder="JobTitle_@Model.Sys.Id">
+                </div>
+                <div class="form-group">
+                    <label for="example-date-input" class="col-form-label">Job Description</label>
+                    <div class="jobDesc" id="JobDescription_@Model.Sys.Id">
+                        @Html.Raw(new HtmlRenderer().ToHtml(Model.JobDescription).Result)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="StartingDate_@Model.Sys.Id" class="">Starting Date</label>
+                            <input type="date" class="form-control" id="StartingDate_@Model.Sys.Id" value="@Model.StartingDate.ToString("yyyy-MM-dd")" placeholder="StartingDate_@Model.Sys.Id">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="EndingDate_@Model.Sys.Id" class="">Ending Date</label>
+                            <input type="date" class="form-control" id="EndingDate_@Model.Sys.Id" value="@(Model.EndingDate.Year > Model.StartingDate.Year ? Model.EndingDate.ToString("yyyy-MM-dd"):string.Empty)" placeholder="EndingDate_@Model.Sys.Id">
+                        </div>
+                    </div>
+                    
+                </div>
+              
+
+                <button class="btn btn-primary" type="button" onclick="alert('@Model.CompanyName changed with Success!')">Edit</button>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>

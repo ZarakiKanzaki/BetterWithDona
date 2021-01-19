@@ -1,5 +1,5 @@
 # BetterWithDona
-Here's my version of Window Site to present my rÃ©sume.
+Here's my version of Window Site to present my résume.
  Access the app through https://betterwithdona.herokuapp.com
 
 Example of appsettings.json
@@ -22,9 +22,9 @@ Example of appsettings.json
   //my ethereal SMTP TEST
   "ServerMail": {
     "smtp": "smtp.ethereal.email",
-    "userSmtp": "userSmtp",
+    "userSmtp": "lee.casper@ethereal.email",
     "pwdSmtp": "pwdSmtp",
-    "port": "port"
+    "port": "587"
   },
   "ContentfulOptions": {
     "DeliveryApiKey": "DeliveryApiKey",
@@ -60,5 +60,11 @@ The content part should be integrated via a headless CMS like Contentful.
 
  - [x] Put the project online using Heroku or similar
  - [x] Polish and UX
- - [x] Highly reusable components
+ - [ ] Highly reusable components
  - [ ] Tests
+
+ ## Template used
+ 
+ https://html5up.net/paradigm-shift
+
+ https://github.com/puikinsh/srtdash-admin-dashboard/blob/master/README.md
