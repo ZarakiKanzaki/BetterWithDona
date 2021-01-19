@@ -30,9 +30,12 @@ namespace BetterWithDona.Controllers
         {
             return View();
         }
-        public IActionResult EditResume()
+        public async Task<IActionResult>  EditResume()
         {
-            return View();
+            string resumeId = config.GetValue<string>("ResumeId");
+            var builder = new QueryBuilder<Resume>().FieldEquals(a => a.Sys.Id, resumeId).Include(3);
+            var resume = (await client.GetEntries(builder)).FirstOrDefault();
+            return View(resume);
         }
 
         public async Task<IActionResult> HandleOffers()

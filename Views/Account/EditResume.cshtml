@@ -1,0 +1,187 @@
+﻿@model BetterWithDona.Models.Resume
+@using Contentful.Core.Models;
+
+@{
+    Layout = "~/Views/Shared/_LayoutBackend.cshtml";
+    ViewBag.Title = "Résume";
+}
+
+@section Breadcrumbs{
+    <!--this might be a partial too.-->
+    <ul class="breadcrumbs pull-left">
+        <li><a href="@Url.Action("Dashboard","Account")">Dashboard</a></li>
+        <li><span>Résume</span></li>
+    </ul>
+}
+
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Edit your Résume</h4>
+            <p class="text-muted font-14 mb-4">The following inputs have no validations of any sorts atm.</p>
+            <div id="accordion2" class="according accordion-s2">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link collapsed" data-toggle="collapse" href="#accordion21" aria-expanded="false">
+                            General Information
+                        </a>
+                    </div>
+                    <div id="accordion21" class="collapse show" data-parent="#accordion2" style="" aria-expanded="true">
+                        <div class="card-body">
+                            <form>
+                                <div class="media mb-5">
+                                    <div>
+                                        <img class="align-self-end img-fluid mr-4" src="https://images.ctfassets.net/2pgesq61jgu9/31VZ4BiykCFapgFvcxjGDF/5441434a66a9be72fdbca25030721669/Immagine.png" alt="image">
+                                        <br />
+                                        <input type="file" />
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="form-group">
+                                            <label for="example-date-input" class="col-form-label">CV (A very nice thing to implement would be the automatic fill of the fields checking the CV)</label>
+                                            <input class="form-control" type="file" id="CV" name="CV">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="col-form-label">Title</label>
+                                            <!--In this case I would implements / edit the razor file to make the html helper do what I want, it just takes a lot of time-->
+                                            <input class="form-control" type="text" value="@Model.Title" id="Title" name="Title">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="example-date-input" class="col-form-label">About</label>
+                                            <div id="summernote">
+                                                @Html.Raw(new HtmlRenderer().ToHtml(Model.About).Result)
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="example-date-input" class="col-form-label">Date of Birth</label>
+                                            <input class="form-control" type="date" value="@Model.Birthdate.ToString("yyyy-MM-dd")" id="Birthdate" name="Birthdate">
+                                        </div>
+
+
+                                        <h4>Address</h4>
+                                        <p class="text-muted font-14 mb-4">This can become a partial, like anything below this section.</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="example-text-input" class="col-form-label">Street name</label>
+                                                        <input class="form-control" type="text" value="@Model.Address.StreetName" id="Address_StreetName" name="Address_StreetName">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="example-text-input" class="col-form-label">Street number</label>
+                                                    <input class="form-control" type="text" value="@Model.Address.StreetNumber" id="Address_StreetNumber" name="Address_StreetNumber">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="example-text-input" class="col-form-label">City</label>
+                                                        <input class="form-control" type="text" value="@Model.Address.City" id="Address_City" name="Address_City">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="example-text-input" class="col-form-label">Province</label>
+                                                    <input class="form-control" type="text" value="@Model.Address.Province" id="Address_Province" name="Address_Province">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="example-text-input" class="col-form-label">Zip Code</label>
+                                                    <input class="form-control" type="text" value="@Model.Address.ZipCode" id="Address_ZipCode" name="Address_ZipCode">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <button class="btn btn-primary" type="button" onclick="alert('General info changed with Success!')">Change</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#accordion22">
+                            Contacts
+                        </a>
+                    </div>
+                    <div id="accordion22" class="collapse" data-parent="#accordion2">
+                        <div class="card-body">
+
+                            @foreach (var item in Model.Contacts)
+                            {
+                                <partial name="Shared/_ContactsEdit" model="@item" />
+
+                            }
+                            <button class="btn btn-outline-primary" type="button" onclick="alert('A wild modal would appear')">Add new</button>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#accordion23">
+                            Work Experience
+                        </a>
+                    </div>
+                    <div id="accordion23" class="collapse" data-parent="#accordion2">
+                        <div class="card-body">
+
+                            @foreach (var item in Model.WorkExperience)
+                            {
+                                <partial name="Shared/_ExperienceEdit" model="@item" />
+
+                            }
+                            <button class="btn btn-outline-primary" type="button" onclick="alert('A wild modal would appear')">Add new</button>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#accordion24">
+                            Iterate foreach section
+                        </a>
+                    </div>
+                    <div id="accordion24" class="collapse" data-parent="#accordion2">
+                        <div class="card-body">
+
+                            <h2>Iterate foreach section</h2>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles{
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+}
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote();
+        });
+    </script>
+}

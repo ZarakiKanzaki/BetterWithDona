@@ -1,0 +1,34 @@
+﻿@model BetterWithDona.Models.Contacts
+
+<div class="card">
+    <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#accordion_@Model.Sys.Id">
+            @Model.Contact
+        </a>
+    </div>
+    <div id="accordion_@Model.Sys.Id" class="collapse" data-parent="#accordion22">
+        <div class="card-body">
+
+            <form>
+                <div class="form-group">
+                    <!--this would be an enum dropdownlist-->
+                    <label for="ContactType_@Model.Sys.Id" class="col-form-label">Contact type</label>
+                    <select class="form-control" name="ContactType_@Model.Sys.Id" id="ContactType_@Model.Sys.Id">
+                        <option value="email" selected="@(Model.ContactType=="email"?"selected":null)">email</option>
+                        <option value="phone" selected="@(Model.ContactType=="phone"?"selected":null)">phone</option>
+                        <option value="mobile" selected="@(Model.ContactType=="mobile"?"selected":null)">mobile</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Contact_@Model.Sys.Id" class="">Contact</label>
+                    <input type="text" class="form-control" id="Contact_@Model.Sys.Id" value="@Model.Contact" placeholder="Contact_@Model.Sys.Id">
+                </div>
+
+                <button class="btn btn-primary" type="button" onclick="alert('@Model.Contact changed with Success!')">Edit</button>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
